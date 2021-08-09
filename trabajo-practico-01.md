@@ -74,11 +74,11 @@ git push origin main
 En el segundo clon también agregar texto, en las mismas líneas que se modificaron el pnanunto anterior.
 Intentar subir el cambio, haciendo un commit y push. Mostrar el error que se obtiene.
 
-![alt text here](screen/Screen Shot 2021-08-09 at 12.59.41.png)
+![alt text here](https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/Screen%20Shot%202021-08-09%20at%2012.59.41.png)
 
 Hacer pull y mergear el código (solo texto por ahora), mostrar la herramienta de mergeo como luce.
 
-![alt text here](screen/Screen Shot 2021-08-09 at 12.59.48.png)
+![alt text here](https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/Screen%20Shot%202021-08-09%20at%2012.59.48.png)
 
 ## Resolver los conflictos del código.
 
