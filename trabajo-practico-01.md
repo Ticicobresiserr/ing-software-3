@@ -49,7 +49,7 @@ git push origin B2021
 ```
 Completar el proceso de revisión en github y mergear el PR al branch master.
 
-Fotos
+![alt text here](screen/Screen Shot 2021-08-09 at 12.59.10.png)
 
 ## Mergear código con conflictos
 Instalar alguna herramienta de comparación. Idealmente una 3-Way:
@@ -74,13 +74,13 @@ git push origin main
 En el segundo clon también agregar texto, en las mismas líneas que se modificaron el pnanunto anterior.
 Intentar subir el cambio, haciendo un commit y push. Mostrar el error que se obtiene.
 
-foto
+![alt text here](screen/Screen Shot 2021-08-09 at 12.59.41.png)
 
 Hacer pull y mergear el código (solo texto por ahora), mostrar la herramienta de mergeo como luce.
 
-foto
+![alt text here](screen/Screen Shot 2021-08-09 at 12.59.48.png)
 
-##Resolver los conflictos del código.
+## Resolver los conflictos del código.
 
 ```
 ing-SW3
@@ -101,7 +101,7 @@ foto
 git config pull.rebase false  # merge (the default strategy)
 ```
 
-Explicar las versiones LOCAL, BASE y REMOTE.
+## Explicar las versiones LOCAL, BASE y REMOTE.
 LOCAL Es el file en la branch donde estamos haciendo el merge
 REMOTE Es el file en la branch desde donde estamos haciendo el merge
 BASE no es el ancestro común, sino la fusión a medio terminar donde los conflictos están marcados con >>>>y <<<<.
