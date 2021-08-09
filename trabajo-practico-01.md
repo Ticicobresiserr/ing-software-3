@@ -49,7 +49,7 @@ git push origin B2021
 ```
 Completar el proceso de revisión en github y mergear el PR al branch master.
 
-![alt text here](screen/Screen Shot 2021-08-09 at 12.59.10.png)
+![alt text here](https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/Screen%20Shot%202021-08-09%20at%2012.59.10.png)
 
 ## Mergear código con conflictos
 Instalar alguna herramienta de comparación. Idealmente una 3-Way:
