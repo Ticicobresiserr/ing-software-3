@@ -124,7 +124,41 @@ docker rm $(docker ps -a -q -f status=exited)
 docker container prune
 ```
 ## Montando volúmenes
-?
+
+```
+$ docker run -it -v /Users/ticianacobresi/Desktop:/var/escritorio busybox /bin/sh
+/ # ls -l /var/escritorio
+```
+total 3229428
+drwxr-xr-x   11 root     root           352 Jan 20  2021 2 Anio
+drwxr-xr-x    7 root     root           224 Apr 16 18:04 3 Anio
+drwxr-xr-x    8 root     root           256 Aug  9 19:07 4Anio
+drwxr-xr-x    7 root     root           224 Mar 25 21:27 DSC
+-rw-r--r--    1 root     root          1717 May  5 23:03 Mariano Aliaga_0xE2D1A22B_public.asc
+drwxr-xr-x    4 root     root           128 Apr 13 21:07 Nubecenter
+drwxr-xr-x    7 root     root           224 Aug 17 21:40 Projectos
+drwxr-xr-x    6 root     root           192 Aug 31  2020 Recursos
+lrwxr-xr-x    1 root     root            29 Apr 21 12:02 Relocated Items.nosync -> /Users/Shared/Relocated Items
+-rw-r--r--    1 root     root     3239742140 Apr  7 20:53 Screen Recording 2021-04-07 at 16.17.47.mov
+-rw-r--r--    1 root     root      67111386 Apr 27 22:18 Screen Recording 2021-04-27 at 19.16.49.mov
+drwxr-xr-x    4 root     root           128 Aug 31  2020 XCode
+drwxr-xr-x    2 root     root            64 Aug 31  2020 Zoom
+-rw-r--r--    1 root     root          1138 Jun  9 01:04 archivo.pem
+drwxr-xr-x    9 root     root           288 Nov 20  2020 baseService
+-rw-r--r--    1 root     root         19178 Feb 23 19:58 cloud.docx
+drwxr-xr-x    9 root     root           288 May  7 18:44 cursos
+-rw-r--r--    1 root     root          2223 May  5 23:55 holi
+-rw-r--r--    1 root     root           279 Jun 28 19:36 open.spotify.com:playlist:3zbRp4eVrcPDpM4USUPTjq.webloc
+-rw-r--r--    1 root     root           276 Aug  5 20:57 open.spotify.com:track:12uCHNPDQSDLMLVtz0zfEw.webloc
+-rwxr-xr-x    1 root     root         23053 Jun  7 15:52 openvpn-install.sh
+drwxr-xr-x  114 root     root          3648 Jan 20  2021 phpmyadmin
+-rw-r--r--    1 root     root          2300 May  5 23:47 texto.txt
+drwxr-xr-x    4 root     root           128 Jan 20  2021 tici
+drwxr-xr-x   15 root     root           480 Jun  8 17:21 web-donaciones
+```
+/ # touch /var/escritorio/hola.txt 
+```
+
 ## Publicando puertos
 ```
 $ docker run -d daviey/nyan-cat-web
