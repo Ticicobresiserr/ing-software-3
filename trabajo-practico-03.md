@@ -113,13 +113,17 @@ def hello():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True, port=bind_port)
+
 ### Explicar cómo funciona el sistema
 En el programa se inicializa una variable que va a ser una instancia de aplicación de Flask y una variable que instancia la base de datos redis. Se instancian el puerto y nombre de host que son las variables de entorno que definimos en nuestra instancia de app/flask-docker (En la red mybrindge instancie la bd redis y conecte la aplicacion app/flask a esa base de datos a partir de las variables de entorno definidas)
 Al ejecutar el programa en el localhost:<REDIS_PORT>/ el programa nos va a responder con 'Hello from Redis! …'
+
 ### ¿Para qué se sirven y porque están los parámetros -e en el segundo Docker run del ejercicio 1?
 Con -e se setean las variables de entorno sea nombre de host, puerto, password, nombre bd para la base de datos. Estas variables son las que despues utilizo para conectar mi programa con la BD de redis
+
 ### ¿Qué pasa si ejecuta docker rm -f web y vuelve a correr docker run -d --net mybridge -e REDIS_HOST=db -e REDIS_PORT=6379 -p 5000:5000 --name web alexisfr/flask-app:latest ?
 Borramos el contenedor aun cuando esta corriendo de la flask-app. Por lo tanto ya no puedo entrar al localhost:5000 y despues corri la imagen que si la encuentra, no tiene que ir a descargar la imagen de nuevo por mas que la hayamos puesto borrar instancia
+
 ### ¿Qué occure en la página web cuando borro el contenedor de Redis con docker rm -f db?
 redis.exceptions.ConnectionError
 Lo que ocurre es que la flask-app ya no encuentra posible la conexión a la base de datos redis, que es la bd con la cual la habiamos conectado dentro de la red mybridge
@@ -132,6 +136,7 @@ Podriamos dejar en local los registros que fuimos haciendo y persistiendo en la 
 docker rm -f db
 docker rm -f web
 docker network rm mybridge
+
 ## 3- Utilizando docker compose
 ###  Normalmente viene como parte de la solucion cuando se instaló Docker
 ###  De ser necesario instalarlo hay que ejecutar:
@@ -157,6 +162,7 @@ volumes:
 
 
 Yo armo mi aplicacion y le digo como quiero que este configurada.
+
 ###  Ejecutar docker-compose up -d
 ``` 
 docker-compose up -d
@@ -171,12 +177,11 @@ Creating practico_app_1 ... done
 ###  Desde el directorio donde se encuentra el archivo docker-compose.yaml ejecutar:
 docker-compose down
 
-``` 
 
 Docker Compose nos permite usar un archivo YAML para definir aplicaciones de múltiples contenedores. Es posible configurar tantos contenedores como queramos, cómo se deben construir y conectar, y dónde se deben almacenar los datos. Podemos ejecutar un solo comando para compilar, ejecutar y configurar todos los contenedores cuando el archivo YAML esté completo.
 Creamos entonces un archivo yaml y definimos una app: el contenedor de la aplicacion flask y le decimos que depende de la imagen db que es el contenedor que tiene la base de datos, le definimos las variables de entorno para que la aplicación se conecte con la bd y los puertos de la imagen flask-app. Luego definimos una base de datos que en nuestro caso esta dada por el contenedor redis:alpine y definimos el volumen local para que la bd almacene lo persistido.
 
-``` 
+
 ``` 
 
 docker ps
@@ -204,9 +209,10 @@ Una cola de Redis que recolecta nuevos votos
 Un trabajador .NET o Java que consume votos y los almacena en...
 Una base de datos de Postgres respaldada por un volumen de Docker
 Una aplicación web Node.js que muestra los resultados de la votación en tiempo real.
+
 ### Pasos:
 Clonar el repositorio https://github.com/dockersamples/example-voting-app. Abrir una línea de comandos y ejecutar
-cd example-voting-app
+cd example-voting
 docker-compose -f docker-compose-javaworker.yml up -d
 - Una vez terminado acceder a http://localhost:5000/ y http://localhost:5001
 - Emitir un voto y ver el resultado en tiempo real.
@@ -234,17 +240,52 @@ services:
        - ./result:/app
         ports:
          - "5001:80"
+        - "5858:5858"
+    networks:
+      - front-tier
+      - back-tier
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.j
+    networks:
+      - back-tier
+
+redis:
+    image: redis:alpine
+    container_name: redis
+    ports: ["6379"]
+    networks:
+      - back-tier
+
+  db:
+    image: postgres:9.4
+    container_name: db
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
 ``` 
-``` 
-## Para vote:
-“build .”: Indica el path para builderar el contexto. Se utiliza para indicar donde está el Dockerfile que queremos utilizar para crear el contenedor. Al definier “.” automaticamente considerará el Dockerfile existente en directorio actual. Esta en ./vote
+
+ “build .”: Indica el path para builderar el contexto. Se utiliza para indicar donde está el Dockerfile que queremos utilizar para crear el contenedor. Al definier “.” automaticamente considerará el Dockerfile existente en directorio actual. Esta en ./vote
 
 “command”: Una vez creado el contenedor, aqui lanzamos el comando python que permite ejecutar la app.py 
 
 “volumes”: Aqui hacemos que el directorio actual se mapee directamente con el /app, lugar donde hemos creado la aplicación. De este modo, cualquier cambio en el directorio local en el host, se hará de inmediato en el contenedor.
 
 ports: Mapeamos los puertos "5000:80", es decir que vamos a hacer un localhost:5000 y el host(donde corre docker) pone la conexión dentro del contenedor en el puerto 80 del mismo que es el que dejamos abierto, que es donde se ejecuta la app
-``` 
+
 ## Analizamos parametros de network
 
 ``` 
@@ -407,25 +448,86 @@ db
 example-voting-app_result_1   
 example-voting-app_vote_1     
 example-voting-app_worker_1  
-redis                         
-5- Análisis detallado
+redis
+
+# version is now using "compose spec"
+# v2 and v3 are now combined!
+# docker-compose v1.27+ required
+
+``` 
+services:
+  vote:
+    build: ./vote
+    # use python rather than gunicorn for local dev
+    command: python app.py
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+     - ./vote:/app
+    ports:
+      - "5000:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  result:
+    build: ./result
+    # use nodemon rather than node for local dev
+    command: nodemon server.js
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./result:/app
+    ports:
+      - "5001:80"
+```    
+                      
+## 5- Análisis detallado
 ### Exponer más puertos urtos para ver la configuración de Redis, y las tablas de PostgreSQL con alguna IDE como dbeaver.
+Creamos un nuevo archivo docker-compose-javaworker-edited.yml con los puertos abiertos para PostgreSQL("5432:5432") y Redis ("6379:6379") y nos conectamos a la bd por un ide
+
+![alt text here](https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/1.png)
+
+![alt text here](https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/2.png)
+
+![alt text here]( https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/3.png)
 
 ### Revisar el código de la aplicación Python example-voting-app\vote\app.py para ver como envía votos a Redis.
-
+Dentro del codigo app.py
+-	crea una funcion “def get_redis(): “ en donde genera una instancia de la base de datos redis y la retorna
+-	crea una segunda funcion “def hello():” en la cual crea una variable “voter_id” que va a ser igual al valor del id del votante que fue guardado en cache.
+-	Si voter_id no tiene valor, le asignamos un valor hexadecimal a ese id
+-	Si hacemos un POST en el endpoint, 1) creamos una variable con la bd, 2) se guarda en una variable el “vote” que hicimos (a o b). A este valor lo tomamos del objeto response(content, headers) que nos da el request.
+-	Se hace un push a la base de datos de redis en la tabla “votes” y se guarda el voter_id y el vote
 
 ### Revisar el código del worker example-voting-app\worker\src\main\java\worker\Worker.java para entender como procesa los datos.
+-	Dentro de la clase worker:
+-	Hace un pop de lo que esta en el lugar 0 de la tabla “votes” de redis, es decir lo ultimo que entró en el registro de la tabla
+-	Lo guarda en una variaable como objeto JSON
+-	Desarma el json y guarda en distintaas variables a “voter_id voterID y vote vote”
+-	Crea una funcion “updateVote(conexion_a_bd, id_de_votante, voto)” en la cual:
+-	Inserta los valores de voterID y vote dentro de la tabla “votes” de Postgres
+-	Si encuentra una excepcion (que ocurre cuando el id que obtengo del pop en la cola de redis ya habia sido previamente cargado en postgres con un determinado) hace un update con el nuevo voto para ese id.
 
 ### Revisar el código de la aplicacion que muestra los resultados example-voting-app\result\server.js para entender como muestra los valores.
-
+-	Crea una funcion que cuenta la cantidad de votos para a y b sumando los id de los votantes para c/u
 
 ### Escribir un documento de arquitectura sencillo, pero con un nivel de detalle moderado, que incluya algunos diagramas de bloques, de sequencia, etc y descripciones de los distintos componentes involucrados es este sistema y como interactuan entre sí.
+-	En la arquitectura de este sistema tenemos:
+-	Una aplicación para votar en Python que registra 2 tipos de votos
+-	Una base de datos redis que guarda el voto para un determinado id de votante
+-	Una aplicación .NET que hace un insert del ultimo voto para ese id
+-	Una base de datos Postgres que guarda el ultimo voto para un determinado id
+-	Un programa que muestra los resultados de cuantos votantes hay por cada voto sumando los diferentes id para cada uno
+
+![alt text here]( https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/4.png)
+
+![alt text here](https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/5.png) 
 
 Presentación del trabajo práctico 3
 La presentación de este práctico forma parte del trabajo integrador, especialemente el último punto con el analisis del sistema, todos los documentos e imagenes pueden ser subidos a una carpeta trabajo-practico-03 con las salidas de los comandos utilizados, explicaciones y respuestas a las preguntas.
-
 Reveer las clase de microservicios y ultima parte de docker
 https://www.youtube.com/watch?v=CZ3wIuvmHeM
-
-
 
