@@ -208,7 +208,8 @@ En vez de imprimir por pantalla quiero usar un Logger. El error dice que no se p
       <version>1.2.1</version>
     </dependency>
 ```
-
+A nivel de complicacion, estas dependencias sirven para que el codigo de la app.java cree las clases pero falta la parte de decir agregame estas clases en el .jar. Entonces en este caso, esta dependencia que agregamos, me permite compilarlo pero a la hora de ejecutarlo, no sabe a donde ir a busccar, resolver esas clases. Le tengo que decir quiero estas dependencias y ponelas en mi ejecutable final (en mi .jar)
+	
 - Verificar si se genera el archivo jar y ejecutarlo
 mvn compile
 mvn clean package
