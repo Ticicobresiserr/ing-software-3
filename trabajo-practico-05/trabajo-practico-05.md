@@ -228,7 +228,9 @@ Caused by: java.lang.ClassNotFoundException: org.slf4j.LoggerFactory
 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
 	... 1 more
 ```
-El problema es que le puse las dependencias, lo compile y lo empaquete, pero en la ejecucion no sabe donde esta la clase. (slf4j). Entonces yo deberia de introducir en el comando “java -cp target/ejemplo-uber-jar-1.0-SNAPSHOT.jar ar.edu.ucc.App” el classpath de la clase para que la aplicación pueda encontrarla 
+El problema es que le puse las dependencias, lo compile y lo empaquete, pero en la ejecucion no sabe donde esta la clase. (slf4j). Entonces yo deberia de introducir en el comando “java -cp target/ejemplo-uber-jar-1.0-SNAPSHOT.jar ar.edu.ucc.App” el classpath de la clase para que la aplicación pueda encontrarla.
+El profe hizo algo asi para hacerlo de forma manual:
+	![alt text here]( https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/Pic.png)
 
 - Implementar la opción de uber-jar: https://maven.apache.org/plugins/maven-shade-plugin/
 
