@@ -369,13 +369,14 @@ Cookiecutter es un módulo para pip que creará el layout de un proyecto Django 
 El propósito de la utilidad make es determinar automáticamente qué partes de un programa grande necesitan ser recompiladas y emitir los comandos necesarios para recompilarlas. Se puede usar make con cualquier lenguaje de programación cuyo compilador se pueda ejecutar con un comando de shell. De hecho, make no se limita a los programas. Se puede usarlo para describir cualquier tarea en la que algunos archivos deban actualizarse automáticamente desde otros siempre que estos cambien.
 Para prepararse para usar make, debe escribir un archivo llamado makefile que describa las relaciones entre los archivos en su programa y los estados de los comandos para actualizar cada archivo.
 Pe, make decide si es necesario volver a generar un objetivo comparando los tiempos de modificación del archivo. Esto resuelve el problema de evitar la creación de archivos que ya están actualizados.
+	Profe: usamos make cuando queremos compilar y linkear librerias dinamicas o estaticas y escibiendo una receta en make se hace mucho mas facil
 
 #### 10- Build tools para otros lenguajes
 - Hacer una lista de herramientas de build (una o varias) para distintos lenguajes, por ejemplo (Rust -> cargo)
 La mayoría de los lenguajes de programación proporcionan un administrador de paquetes para una fácil instalación. 
 ![alt text here]( https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/Picture5.png)
 
-###PIP
+### PIP
 pip es un sistema de administración de paquetes escrito en Python que se usa para instalar y administrar paquetes de software. Se conecta a un repositorio en línea de paquetes públicos, llamado Python Package Index.
 
 #### Conda
@@ -416,8 +417,7 @@ Gulp es un manejador de tareas(Task manager) una incredible herramienta para tod
 El Administrador de paquetes de Perl (PPM) proporciona una interfaz de línea de comandos para administrar módulos y extensiones de Perl (paquetes). PPM le permite acceder a los repositorios de paquetes, instalar y eliminar paquetes de su sistema y actualizar los paquetes que instaló previamente usando PPM con las últimas versiones.
 
 https://devopedia.org/package-manager
-Para que se usa babel?
-Que es un manejador de tareas vs manejaador de paquetes?
+Que es un manejador de tareas vs manejador de paquetes?
 
 - Elegir al menos 10 lenguajes de la lista de top 20 o top 50 de tiobe: https://www.tiobe.com/tiobe-index/
 
@@ -435,6 +435,8 @@ En continue delivery, hay alguien que aprieta un boton y lo sube a produccion. E
 Para construir codigo:
 Tienen manejadores de paquetes/dependencias
 
+#### Profe: Grupnt, gulp, webpack
+Cuando estamos en un navegador web, si hacemos un inspeccionar/source de esa pagina vamos a ver miles de carpetas que son las que se deberian "descargar" (de 10Megas pe) para que el cliente pueda usar el navegador (si el navegador no me guardo en cache los ingresos). Entonces esas carpetas se comprimprimen al maximo posible, sin espacios por ejemplo para que esos 10mb puedan reducirse. Estas herramientas funcionan para estas cosas
 
 
 
