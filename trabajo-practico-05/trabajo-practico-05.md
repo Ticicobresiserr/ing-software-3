@@ -376,7 +376,7 @@ Pe, make decide si es necesario volver a generar un objetivo comparando los tiem
 La mayoría de los lenguajes de programación proporcionan un administrador de paquetes para una fácil instalación. 
 ![alt text here]( https://github.com/Ticicobresiserr/ing-software-3/blob/main/screen/Picture5.png)
 
-### PIP
+#### PIP
 pip es un sistema de administración de paquetes escrito en Python que se usa para instalar y administrar paquetes de software. Se conecta a un repositorio en línea de paquetes públicos, llamado Python Package Index.
 
 #### Conda
@@ -409,9 +409,6 @@ Homebrew es un sistema de gestión de paquetes que simplifica la instalación, a
 
 #### NuGet
 NuGet es el administrador de paquetes para .NET. Las herramientas de cliente de NuGet brindan la capacidad de producir y consumir paquetes. La Galería NuGet es el repositorio central de paquetes que usan todos los autores y consumidores de paquetes.
-
-#### Gulp 
-Gulp es un manejador de tareas(Task manager) una incredible herramienta para todo desarrollador que permite de forma automática, gestionar toda clases de tareas comunes y a la ves tediosas en el desarrollo de cualquier aplicación… (Mover archivos de una carpeta a otra, eliminar archivos que se crean de forma automática en algunas instalaciones, minificar tu css o js, compilar tus archivos .less o .sass de manera manual pues gulp no solo te permite solucionar estos problemas sino que de igual manera te provee de herramientas que te permiten hacer cosas increíbles como sincronizar el navegador cuando modificas tu código para que se vean tus cambios de manera automática, validar sintaxis para encontrar mas fácilmente tus errores y un largo etcétera de de ventajas plugins y tareas que podemos ejecutar de forma automática desde esta increíble herramienta.
 
 #### ppm 
 El Administrador de paquetes de Perl (PPM) proporciona una interfaz de línea de comandos para administrar módulos y extensiones de Perl (paquetes). PPM le permite acceder a los repositorios de paquetes, instalar y eliminar paquetes de su sistema y actualizar los paquetes que instaló previamente usando PPM con las últimas versiones.
